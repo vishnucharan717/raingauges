@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 
 def map_plotting():
     # Load data from the combined CSV file
-    main_sensors_papth = r'C:\Users\vishnu71\Desktop\API_Code_Python\Sensor_Data\main_sensors.csv'
+    main_sensors_papth = r'Sensor_Data/main_sensors.csv'
     df_combined = pd.read_csv(main_sensors_papth)
 
     # Ensure Latitude and Longitude columns are numeric
@@ -76,13 +76,10 @@ def map_plotting():
     )
 
     # Save the map as an HTML file
-    output_path = r'C:\Users\vishnu71\Desktop\API_Code_Python\static\disd_map.html'
+    output_path = r'disd_map.html'
     fig.write_html(output_path, full_html=True, config={'displayModeBar': False, 'scrollZoom': True})
 
     return output_path
-
-import shutil
-import os
 
 def retrieve_guage_plot(station_id, selected_date=None):
     # If selected_date is not provided, use yesterday's date
@@ -93,16 +90,17 @@ def retrieve_guage_plot(station_id, selected_date=None):
     if isinstance(selected_date, str):
         selected_date = datetime.strptime(selected_date, '%Y-%m-%d')
     
-    formatted_date = selected_date.strftime(r"\%Y\%m\%d\\")
+    formatted_date = selected_date.strftime(r"/%Y/%m/%d/")
     
-    main_sensors_papth = r'C:\Users\vishnu71\Desktop\API_Code_Python\Sensor_Data\main_sensors.csv'
+    main_sensors_papth = r'Sensor_Data/main_sensors.csv'
     df_combined = pd.read_csv(main_sensors_papth)
     gauge_info = df_combined[df_combined['Station Id'] == station_id].to_dict(orient='records')
     
     sensor_grp = gauge_info[0]['Sensor Group']
     dirmatching = {'Contra Costa': 'contracosta', "Sonoma County": "sonomawater", "Valley Water": "valleywater"}
     sensor_id = gauge_info[0]['Station Id']
-    rootpath = r'X:\vishnu71\raingauge\Plots_Data'
+    # rootpath = r'A:/aqpi/XBand/web-files/PRODUCTS/Raingauge_Comparison'
+    rootpath = r'/app/Raingauge_Comparison'
     rootpath += formatted_date + dirmatching[sensor_grp]
 
     matching_files = []
