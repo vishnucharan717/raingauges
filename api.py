@@ -10,6 +10,9 @@ CORS(app)
 IMAGE_ROOT = r'/app/Raingauge_Comparison'
 # IMAGE_ROOT = r'A:/aqpi/XBand/web-files/PRODUCTS/Raingauge_Comparison'
 
+# Generate the map before starting Flask
+map_plotting()
+
 @app.route('/')
 def home():
     return "Welcome to the Rain Gauge Comparison App!"

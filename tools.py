@@ -13,7 +13,6 @@ import urllib.parse
 from datetime import datetime, timedelta
 
 def map_plotting():
-
     df_sonoma_path = r'Sensor_Data/sensors_contracosta.csv'
     df_valley_path = r'Sensor_Data/sensors_sonoma.csv'
     df_contra_path = r'Sensor_Data/sensors_valley.csv'
@@ -72,9 +71,12 @@ def map_plotting():
     )
  
     # Save the map
-    output_path = r'disd_map.html'
+    static_dir = os.path.join(os.getcwd(), "static")
+    os.makedirs(static_dir, exist_ok=True)  # Create the directory if it doesn't exist
+    output_path = os.path.join(static_dir, "disd_map.html")
     fig.write_html(output_path, full_html=True, config={'displayModeBar': False, 'scrollZoom': True})
- 
+    print(f"Map saved at: {output_path}")
+
     return output_path
 
 # def map_plotting():
