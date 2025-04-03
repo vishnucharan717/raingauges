@@ -151,7 +151,7 @@ def map_plotting():
 def retrieve_guage_plot(station_id, selected_date=None):
     # If selected_date is not provided, use yesterday's date
     if selected_date is None:
-        selected_date = datetime.now() - timedelta(days=1)
+        selected_date = datetime.now() - timedelta(days=2)
     
     # Ensure selected_date is a datetime object
     if isinstance(selected_date, str):
