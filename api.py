@@ -33,7 +33,7 @@ def gauge_page(station_id):
     print("DATEE")
     print(selected_date)
     if not selected_date:
-        selected_date = datetime.now() - timedelta(days=1)
+        selected_date = datetime.now() - timedelta(days=2)
     plot_image_path = retrieve_guage_plot(station_id, selected_date)
     
     # Load station data from CSV
