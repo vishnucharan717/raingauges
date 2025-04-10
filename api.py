@@ -11,7 +11,7 @@ IMAGE_ROOT = r'/app/Raingauge_Comparison'
 # IMAGE_ROOT = r'A:/aqpi/XBand/web-files/PRODUCTS/Raingauge_Comparison'
 
 # Generate the map before starting Flask
-map_plotting()
+# map_plotting()
 
 @app.route('/')
 def home():
@@ -25,13 +25,16 @@ def generate_map():
 def gauge_page(station_id):
     selected_date = None
     if request.method == 'POST':
-        selected_date_str = request.form.get('date')  # assuming date is passed from a form
-        if selected_date_str:
-            selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d')  # Convert to datetime object
-    
-    # If no date is selected, set it to yesterday
-    print("DATEE")
-    print(selected_date)
+        selected_date_str = request.form.get('date')
+    else:
+        selected_date_str = request.args.get('date')
+
+    if selected_date_str:
+        try:
+            selected_date = datetime.strptime(selected_date_str, '%Y-%m-%d')
+        except ValueError:
+            selected_date = None 
+
     if not selected_date:
         selected_date = datetime.now() - timedelta(days=2)
     plot_image_path = retrieve_guage_plot(station_id, selected_date)
