@@ -16,9 +16,11 @@ def map_plotting():
     df_sonoma_path = r'Sensor_Data/sensors_contracosta.csv'
     df_valley_path = r'Sensor_Data/sensors_sonoma.csv'
     df_contra_path = r'Sensor_Data/sensors_valley.csv'
+    df_cnrfc_path = r'Sensor_Data/sensors_cnrfc.csv'
     df_sonoma = pd.read_csv(df_sonoma_path)
     df_valley = pd.read_csv(df_valley_path)
     df_contra = pd.read_csv(df_contra_path)
+    df_cnrfc = pd.read_csv(df_cnrfc_path)
  
     def clean_df(df):
         df['Latitude'] = pd.to_numeric(df['Latitude'], errors='coerce')
@@ -31,6 +33,7 @@ def map_plotting():
     df_sonoma = clean_df(df_sonoma)
     df_valley = clean_df(df_valley)
     df_contra = clean_df(df_contra)
+    df_cnrfc = clean_df(df_cnrfc)
  
     # Create a blank figure
     fig = go.Figure()
@@ -56,10 +59,11 @@ def map_plotting():
     add_sensor_trace(fig, df_sonoma, "#256b9c")  # Sonoma County
     add_sensor_trace(fig, df_valley, "#b09a25")  # Valley Water
     add_sensor_trace(fig, df_contra, "#9c4b4b")  # Contra Costa
+    add_sensor_trace(fig, df_cnrfc, "#32CD32")  # CNRFC
  
     # Center map based on mean coordinates
-    center_lat = pd.concat([df_sonoma, df_valley, df_contra])['Latitude'].mean()
-    center_lon = pd.concat([df_sonoma, df_valley, df_contra])['Longitude'].mean()
+    center_lat = pd.concat([df_sonoma, df_valley, df_contra, df_cnrfc])['Latitude'].mean()
+    center_lon = pd.concat([df_sonoma, df_valley, df_contra, df_cnrfc])['Longitude'].mean()
  
     # Update layout
     fig.update_layout(
@@ -164,7 +168,7 @@ def retrieve_guage_plot(station_id, selected_date=None):
     gauge_info = df_combined[df_combined['Station Id'] == station_id].to_dict(orient='records')
     
     sensor_grp = gauge_info[0]['Sensor Group']
-    dirmatching = {'Contra Costa': 'contracosta', "Sonoma County": "sonomawater", "Valley Water": "valleywater"}
+    dirmatching = {'Contra Costa': 'contracosta', "Sonoma County": "sonomawater", "Valley Water": "valleywater", "CNRFC":"cnrfc"}
     sensor_id = gauge_info[0]['Station Id']
     # rootpath = r'A:/aqpi/XBand/web-files/PRODUCTS/Raingauge_Comparison'
     rootpath = r'/app/Raingauge_Comparison'
